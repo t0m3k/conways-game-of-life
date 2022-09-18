@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Title</title>
+    <title>Game of life</title>
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta
@@ -16,16 +16,16 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
+
+    <!-- google code prettify -->
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-light bg-light px-3 sticky-top">
-      <a class="navbar-brand" href="#">Hello there</a>
+      <a class="navbar-brand" href="#">Hi there</a>
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link" href="#task">Task description</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#assumptions">Assumptions</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#example">Example</a>
@@ -49,56 +49,6 @@
       class="scrollspy-example"
       tabindex="0"
     >
-      <div id="task" class="pt-5">
-        <header class="py-3 mb-4 border-bottom">
-          <div class="container d-flex flex-wrap justify-content-center">
-            <a
-              href="#task"
-              class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-            >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#task" />
-              </svg>
-              <span class="fs-4">Task description</span>
-            </a>
-          </div>
-        </header>
-        <div class="container">
-          <div class="row">
-            <p>
-              In a language of your choice, using all best practice principles
-              you’re aware of, could you please provide code that reads a list
-              of 10 numbers ranging between 1 to 100. Assuming there are 4
-              duplicates in the list of numbers, the output should remove the
-              duplicates and sort the remaining numbers in descending
-              order.Please state any assumptions you have made in this
-              assignment.
-            </p>
-          </div>
-        </div>
-      </div>
-      <div id="assumptions" class="pt-5">
-        <header class="py-3 mb-4 border-bottom">
-          <div class="container d-flex flex-wrap justify-content-center">
-            <a
-              href="#assumptions"
-              class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
-            >
-              <svg class="bi me-2" width="40" height="32">
-                <use xlink:href="#task" />
-              </svg>
-              <span class="fs-4">Assumptions</span>
-            </a>
-          </div>
-        </header>
-        <div class="container">
-          <div class="row">
-            <ul class="list-group list-group-flush">
-              <li class="list-group-item">The input is vetted.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
       <div id="example" class="pt-5">
         <header class="py-3 mb-4 border-bottom">
           <div class="container d-flex flex-wrap justify-content-center">
@@ -126,53 +76,92 @@
             <svg class="bi me-2" width="40" height="32">
               <use xlink:href="#bootstrap" />
             </svg>
-            <span class="fs-4">Sorting Source Code</span>
+            <span class="fs-4">Source Code</span>
           </a>
         </div>
       </header>
       <div class="container d-flex flex-wrap justify-content-center">
         <pre>
       <code id="source-code" class="prettyprint">
-      const mergeSort = (array) => {
-        if (array.length < 2) return array;
-      
-        // find middle point and split array
-        const middle = Math.floor(array.length / 2);
-        const arr1 = array.slice(0, middle);
-        const arr2 = array.slice(middle);
-      
-        // use reccurency to get to arrays of size 1 and merge them
-        return merge(mergeSort(arr1), mergeSort(arr2));
+class GameOfLife {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+
+    this.array = new Array(x * y);
+
+    this.item = (x, y) => {
+      if (x >= this.x) return this.item(x - this.x, y);
+      if (x < 0) return this.item(x + this.x, y);
+
+      if (y >= this.y) return this.item(x, y - this.y);
+      if (y < 0) return this.item(x, y + this.y);
+
+      const itemLocation = x + this.x * y;
+
+      return this.array[itemLocation];
+    };
+
+    for (let i = 0; i < x * y; i++) {
+      const eX = i % x;
+      const eY = Math.floor(i / x);
+      this.array[i] = {
+        value: Math.floor(Math.random() * 100) > 80 ? 1 : 0,
+        x: eX,
+        y: eY,
+        set: function (value) {
+          this.value = value;
+          return this;
+        },
+        neighbours: () => {
+          return (
+            this.item(eX, eY + 1).value +
+            this.item(eX + 1, eY + 1).value +
+            this.item(eX - 1, eY + 1).value +
+            this.item(eX, eY - 1).value +
+            this.item(eX + 1, eY - 1).value +
+            this.item(eX - 1, eY - 1).value +
+            this.item(eX + 1, eY).value +
+            this.item(eX - 1, eY).value
+          );
+        },
+        state: () => {
+          const item = this.item(eX, eY);
+          const neighbours = item.neighbours();
+          const value = item.value;
+          if (value === 1) {
+            if (2 > neighbours || neighbours > 3) {
+              item.next = () => item.set(0);
+              return state.DYING;
+            }
+            item.next = () => {};
+            return state.ALIVE;
+          }
+          if (neighbours === 3) {
+            item.next = () => item.set(1);
+            return state.COMING_TO_LIFE;
+          }
+          item.next = () => {};
+          return state.DEAD;
+        },
+        next: () => {},
       };
-      
-      const merge = (arr1, arr2) => {
-        const result = [];
-      
-        // add item to result if it't value isn't equal to the last item in result
-        const addWithCheck = (item) => {
-          if (result.length === 0 || item != result[result.length - 1])
-            result.push(item);
-        };
-      
-        while (arr1.length && arr2.length) {
-          // assign smaller first element from arrays to e.
-          const e = arr1[0] > arr2[0] ? arr1.shift() : arr2.shift();
-      
-          // if there are elements in result and e is different than last element add e to result
-          addWithCheck(e);
-        }
-      
-        // Clear arrays if there is anything left in either one of them.
-        arr1.forEach(addWithCheck);
-        arr2.forEach(addWithCheck);
-      
-        return result;
-      };</code>
+    }
+  }
+}
+
+const state = {
+  DYING: "DYING",
+  COMING_TO_LIFE: "COMING_TO_LIFE",
+  ALIVE: "ALIVE",
+  DEAD: "DEAD",
+};</code>
             </pre>
       </div>
     </div>
     <!-- Optional JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+    <script src="src/GameOfLife.js"></script>
     <script src="src/main.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script
