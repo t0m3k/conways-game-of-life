@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light px-3 sticky-top">
+      <a class="navbar-brand" href="#">Hello there</a>
+      <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link" href="#task">Task description</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#assumptions">Assumptions</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#example">Example</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#code">Source code</a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link"
+            href="https://github.com/t0m3k/sort-no-duplicates-web"
+            >Github</a
+          >
+        </li>
+      </ul>
+    </nav>
+    <div
+      data-bs-spy="scroll"
+      data-bs-target="#navbar-example2"
+      data-bs-offset="0"
+      class="scrollspy-example"
+      tabindex="0"
+    >
+      <div id="task" class="pt-5">
+        <header class="py-3 mb-4 border-bottom">
+          <div class="container d-flex flex-wrap justify-content-center">
+            <a
+              href="#task"
+              class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+            >
+              <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#task" />
+              </svg>
+              <span class="fs-4">Task description</span>
+            </a>
+          </div>
+        </header>
+        <div class="container">
+          <div class="row">
+            <p>
+              In a language of your choice, using all best practice principles
+              you’re aware of, could you please provide code that reads a list
+              of 10 numbers ranging between 1 to 100. Assuming there are 4
+              duplicates in the list of numbers, the output should remove the
+              duplicates and sort the remaining numbers in descending
+              order.Please state any assumptions you have made in this
+              assignment.
+            </p>
+          </div>
+        </div>
+      </div>
+      <div id="assumptions" class="pt-5">
+        <header class="py-3 mb-4 border-bottom">
+          <div class="container d-flex flex-wrap justify-content-center">
+            <a
+              href="#assumptions"
+              class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+            >
+              <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#task" />
+              </svg>
+              <span class="fs-4">Assumptions</span>
+            </a>
+          </div>
+        </header>
+        <div class="container">
+          <div class="row">
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">The input is vetted.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div id="example" class="pt-5">
+        <header class="py-3 mb-4 border-bottom">
+          <div class="container d-flex flex-wrap justify-content-center">
+            <a
+              href="#example"
+              class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+            >
+              <svg class="bi me-2" width="40" height="32">
+                <use xlink:href="#task" />
+              </svg>
+              <span class="fs-4">Example</span>
+            </a>
+          </div>
+        </header>
+        <div id="myContainer" class="container"></div>
+      </div>
+    </div>
+    <div class="mt-5 pt-5" id="code">
+      <header class="py-3 mb-4 border-bottom">
+        <div class="container d-flex flex-wrap justify-content-center">
+          <a
+            href="#code"
+            class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
+          >
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#bootstrap" />
+            </svg>
+            <span class="fs-4">Sorting Source Code</span>
+          </a>
+        </div>
+      </header>
+      <div class="container d-flex flex-wrap justify-content-center">
+        <pre>
+      <code id="source-code" class="prettyprint">
+      const mergeSort = (array) => {
+        if (array.length < 2) return array;
+      
+        // find middle point and split array
+        const middle = Math.floor(array.length / 2);
+        const arr1 = array.slice(0, middle);
+        const arr2 = array.slice(middle);
+      
+        // use reccurency to get to arrays of size 1 and merge them
+        return merge(mergeSort(arr1), mergeSort(arr2));
+      };
+      
+      const merge = (arr1, arr2) => {
+        const result = [];
+      
+        // add item to result if it't value isn't equal to the last item in result
+        const addWithCheck = (item) => {
+          if (result.length === 0 || item != result[result.length - 1])
+            result.push(item);
+        };
+      
+        while (arr1.length && arr2.length) {
+          // assign smaller first element from arrays to e.
+          const e = arr1[0] > arr2[0] ? arr1.shift() : arr2.shift();
+      
+          // if there are elements in result and e is different than last element add e to result
+          addWithCheck(e);
+        }
+      
+        // Clear arrays if there is anything left in either one of them.
+        arr1.forEach(addWithCheck);
+        arr2.forEach(addWithCheck);
+      
+        return result;
+      };</code>
+            </pre>
+      </div>
+    </div>
+    <!-- Optional JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+    <script src="src/main.js"></script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
