@@ -1,47 +1,59 @@
-const arr = new GameOfLife(150, 150);
 const width = 600;
 const height = 600;
+const game = new GameOfLife(150, 150);
+const gameState = new GameState(GameState.states.PAUSED);
 function setup() {
-  let cnv = createCanvas(width, height);
+  const cnv = createCanvas(width, height);
   cnv.parent("myContainer");
-  frameRate(15);
+  background(15);
+  frameRate(5);
+  game.random(10);
 }
 
-console.log(arr.x, arr.y);
-
 function draw() {
-  background(15);
-  for (let x = 0; x < arr.x; x++) {
-    for (let y = 0; y < arr.y; y++) {
-      arr.item(x, y)?.next();
-      const element = arr.item(x, y);
-      const elementState = element.state();
+  gameState.checkState();
 
-      switch (elementState) {
-        case state.ALIVE:
-          fill(255);
-          break;
-        // case state.COMING_TO_LIFE:
-        //   fill(0, 255, 0);
-        //   break;
-        case state.DYING:
-          fill(255);
-          break;
+  if (gameState.state === GameState.states.RUNNING) {
+    let alive = 0;
+    for (let x = 0; x < game.x; x++) {
+      for (let y = 0; y < game.y; y++) {
+        const element = game.item(x, y);
+        const elementState = element.state();
 
-        default:
-          fill(0);
-          break;
+        switch (elementState) {
+          case cellState.ALIVE:
+            fill(255);
+
+            alive++;
+            break;
+          case cellState.COMING_TO_LIFE:
+            fill(0);
+            break;
+          case cellState.DYING:
+            fill(255);
+
+            alive++;
+            break;
+
+          default:
+            fill(0);
+            break;
+        }
+
+        rect(
+          1 + ((width - 2) / game.x) * x,
+          1 + ((height - 2) / game.y) * y,
+          width / game.x,
+          height / game.y
+        );
       }
-
-      rect(
-        1 + ((width - 2) / arr.x) * x,
-        1 + ((height - 2) / arr.y) * y,
-        width / arr.x,
-        height / arr.y
-      );
     }
-  }
-  for (let x = 0; x < arr.x; x++) {
-    for (let y = 0; y < arr.y; y++) {}
+
+    for (let x = 0; x < game.x; x++) {
+      for (let y = 0; y < game.y; y++) {
+        game.item(x, y).next();
+      }
+    }
+    $("#aliveCells").html(alive);
   }
 }

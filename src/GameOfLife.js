@@ -5,23 +5,11 @@ class GameOfLife {
 
     this.array = new Array(x * y);
 
-    this.item = (x, y) => {
-      if (x >= this.x) return this.item(x - this.x, y);
-      if (x < 0) return this.item(x + this.x, y);
-
-      if (y >= this.y) return this.item(x, y - this.y);
-      if (y < 0) return this.item(x, y + this.y);
-
-      const itemLocation = x + this.x * y;
-
-      return this.array[itemLocation];
-    };
-
     for (let i = 0; i < x * y; i++) {
       const eX = i % x;
       const eY = Math.floor(i / x);
       this.array[i] = {
-        value: Math.floor(Math.random() * 100) > 80 ? 1 : 0,
+        value: 0,
         x: eX,
         y: eY,
         set: function (value) {
@@ -47,25 +35,50 @@ class GameOfLife {
           if (value === 1) {
             if (2 > neighbours || neighbours > 3) {
               item.next = () => item.set(0);
-              return state.DYING;
+              return cellState.DYING;
             }
             item.next = () => {};
-            return state.ALIVE;
+            return cellState.ALIVE;
           }
           if (neighbours === 3) {
             item.next = () => item.set(1);
-            return state.COMING_TO_LIFE;
+            return cellState.COMING_TO_LIFE;
           }
           item.next = () => {};
-          return state.DEAD;
+          return cellState.DEAD;
         },
         next: () => {},
       };
     }
   }
+  item = (x, y) => {
+    if (x >= this.x) return this.item(x - this.x, y);
+    if (x < 0) return this.item(x + this.x, y);
+
+    if (y >= this.y) return this.item(x, y - this.y);
+    if (y < 0) return this.item(x, y + this.y);
+
+    const itemLocation = x + this.x * y;
+
+    return this.array[itemLocation];
+  };
+
+  forEach = (callback) => {
+    for (let i = 0; i < this.array.length; i++) {
+      const eX = i % this.x;
+      const eY = Math.floor(i / this.x);
+      callback(this.item(eX, eY), eX, eY, i);
+    }
+  };
+
+  random = (chance) => {
+    this.forEach((it) => {
+      it.value = Math.floor(Math.random() * 100) > 100 - chance ? 1 : 0;
+    });
+  };
 }
 
-const state = {
+const cellState = {
   DYING: "DYING",
   COMING_TO_LIFE: "COMING_TO_LIFE",
   ALIVE: "ALIVE",
