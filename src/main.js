@@ -1,5 +1,5 @@
-const width = 600;
-const height = 600;
+const width = 500;
+const height = 500;
 const game = new GameOfLife(150, 150);
 const gameState = new GameState(GameState.states.PAUSED);
 function setup() {

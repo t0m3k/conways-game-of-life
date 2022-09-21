@@ -16,9 +16,6 @@
       integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
       crossorigin="anonymous"
     />
-
-    <!-- google code prettify -->
-    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   </head>
   <body>
     <nav class="navbar navbar-light bg-light px-3 sticky-top">
@@ -28,7 +25,7 @@
           <a class="nav-link" href="#example">Example</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#code">Source code</a>
+          <a class="nav-link" href="#description">Description</a>
         </li>
         <li class="nav-item">
           <a
@@ -123,124 +120,57 @@
         </div>
       </div>
     </div>
-    <div class="mt-5 pt-5 ml-0" id="code">
+    <div class="mt-5 pt-5 ml-0" id="description">
       <header class="py-3 mb-4 border-bottom">
         <div class="container d-flex flex-wrap justify-content-center">
           <a
-            href="#code"
+            href="#description"
             class="d-flex align-items-center mb-3 mb-lg-0 me-lg-auto text-dark text-decoration-none"
           >
             <svg class="bi me-2" width="40" height="32">
               <use xlink:href="#bootstrap" />
             </svg>
-            <span class="fs-4">Source Code</span>
+            <span class="fs-4">Description</span>
           </a>
         </div>
       </header>
-      <div class="container d-flex flex-wrap">
-        <pre>
-      <code id="source-code" class="prettyprint">
-class GameOfLife {
-  constructor(x, y) {
-    this.x = x;
-    this.y = y;
-
-    this.array = new Array(x * y);
-
-    for (let i = 0; i < x * y; i++) {
-      const eX = i % x;
-      const eY = Math.floor(i / x);
-      this.array[i] = {
-        value: 0,
-        x: eX,
-        y: eY,
-        set: function (value) {
-          this.value = value;
-          return this;
-        },
-        neighbours: () => {
-          return (
-            this.item(eX, eY + 1).value +
-            this.item(eX + 1, eY + 1).value +
-            this.item(eX - 1, eY + 1).value +
-            this.item(eX, eY - 1).value +
-            this.item(eX + 1, eY - 1).value +
-            this.item(eX - 1, eY - 1).value +
-            this.item(eX + 1, eY).value +
-            this.item(eX - 1, eY).value
-          );
-        },
-        state: () => {
-          const item = this.item(eX, eY);
-          const neighbours = item.neighbours();
-          const value = item.value;
-          if (value === 1) {
-            if (2 > neighbours || neighbours > 3) {
-              item.next = () => item.set(0);
-              return cellState.DYING;
-            }
-            item.next = () => {};
-            return cellState.ALIVE;
-          }
-          if (neighbours === 3) {
-            item.next = () => item.set(1);
-            return cellState.COMING_TO_LIFE;
-          }
-          item.next = () => {};
-          return cellState.DEAD;
-        },
-        next: () => {},
-      };
-    }
-  }
-  item = (x, y) => {
-    if (x >= this.x) return this.item(x - this.x, y);
-    if (x < 0) return this.item(x + this.x, y);
-
-    if (y >= this.y) return this.item(x, y - this.y);
-    if (y < 0) return this.item(x, y + this.y);
-
-    const itemLocation = x + this.x * y;
-
-    return this.array[itemLocation];
-  };
-
-  forEach = (callback) => {
-    for (let i = 0; i < this.array.length; i++) {
-      const eX = i % this.x;
-      const eY = Math.floor(i / this.x);
-      callback(this.item(eX, eY), eX, eY, i);
-    }
-  };
-
-  random = (chance) => {
-    this.forEach((it) => {
-      it.value = Math.floor(Math.random() * 100) > 100 - chance ? 1 : 0;
-    });
-  };
-}
-
-const cellState = {
-  DYING: "DYING",
-  COMING_TO_LIFE: "COMING_TO_LIFE",
-  ALIVE: "ALIVE",
-  DEAD: "DEAD",
-};</code>
-            </pre>
+      <div class="container">
+        <div class="row">
+          <h5>Source code:</h5>
+          <p>
+            Avaiable at
+            <a href="https://github.com/t0m3k/conways-game-of-life">Github</a>
+          </p>
+        </div>
+        <div class="row pt-4">
+          <h5>Tools used:</h5>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <a href="https://getbootstrap.com">Bootstrap 5</a>
+            </li>
+            <li class="list-group-item">
+              <a href="https://p5js.org/">p5.js</a>
+            </li>
+            <li class="list-group-item">
+              <a href="https://jquery.com/">jQuery</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
-    <!-- Optional JavaScript -->
+    <!-- jQuery -->
     <script
       src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
       integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
       crossorigin="anonymous"
     ></script>
+    <!-- Optional JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
     <script src="src/GameState.js"></script>
     <script src="src/GameOfLife.js"></script>
     <script src="src/main.js"></script>
     <script src="src/buttons.js"></script>
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- Popper.js, then Bootstrap JS -->
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
