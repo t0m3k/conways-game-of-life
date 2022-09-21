@@ -49,5 +49,7 @@ function draw() {
     game.forEach((item) => item.next());
   }
 
-  $("#aliveCells").html(alive);
+  $("#aliveCells").html(
+    `${alive} (${Math.round((alive / (game.x * game.y)) * 100)}%)`
+  );
 }
