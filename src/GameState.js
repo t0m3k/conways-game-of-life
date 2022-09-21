@@ -1,6 +1,15 @@
 class GameState {
   constructor(state = GameState.states.PAUSED) {
     this.state = state;
+    this.step = false;
+  }
+
+  goStep() {
+    if (this.state === GameState.states.PAUSED && this.step) {
+      this.step = false;
+      return true;
+    }
+    return false;
   }
 
   triggerState = () =>

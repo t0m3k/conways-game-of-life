@@ -7,11 +7,11 @@ function setup() {
   cnv.parent("myContainer");
   background(15);
   frameRate(5);
-  game.random(10);
+  game.random($("#fillChanceInput").val());
 }
 
 function draw() {
-  gameState.checkState();
+  // gameState.checkState();
 
   let alive = 0;
   game.forEach((element, x, y) => {
@@ -45,7 +45,7 @@ function draw() {
     );
   });
 
-  if (gameState.state === GameState.states.RUNNING) {
+  if (gameState.state === GameState.states.RUNNING || gameState.goStep()) {
     game.forEach((item) => item.next());
   }
 

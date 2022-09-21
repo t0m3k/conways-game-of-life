@@ -22,7 +22,7 @@
   </head>
   <body>
     <nav class="navbar navbar-light bg-light px-3 sticky-top">
-      <a class="navbar-brand" href="#">Conways Gmae of Life</a>
+      <a class="navbar-brand" href="#">Conways Game of Life</a>
       <ul class="nav nav-pills">
         <li class="nav-item">
           <a class="nav-link" href="#example">Example</a>
@@ -102,6 +102,18 @@
             <label class="btn btn-outline-primary" for="randomFill"
               >Random</label
             >
+          </div>
+          <div id="fillChance" class="w-25 pt-3">
+            <label for="fillChanceInput" class="form-label">Fill chance:</label>
+            <input
+              type="range"
+              class="form-range"
+              min="1"
+              max="100"
+              step="1"
+              id="fillChanceInput"
+              value="10"
+            />
           </div>
         </div>
         <div id="myContainer" class="container"></div>
@@ -218,16 +230,17 @@ const cellState = {
       </div>
     </div>
     <!-- Optional JavaScript -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.1.slim.min.js"
+      integrity="sha256-w8CvhFs7iHNVUtnSP0YKEg00p9Ih13rlL9zGqvLdePA="
+      crossorigin="anonymous"
+    ></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
     <script src="src/GameState.js"></script>
     <script src="src/GameOfLife.js"></script>
     <script src="src/main.js"></script>
+    <script src="src/buttons.js"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
       integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
