@@ -12,6 +12,12 @@ class GameState {
     return false;
   }
 
+  setStep() {
+    if (!this.step) {
+      this.step = true;
+    }
+  }
+
   triggerState = () =>
     (this.state =
       this.state === this.states.RUNNING
