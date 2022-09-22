@@ -17,5 +17,5 @@ $("#offCheck").click(() => {
 // Random button
 $("#randomFill").click(() => {
   const chance = $("#fillChanceInput").val();
-  game.random();
+  game.random(chance);
 });
