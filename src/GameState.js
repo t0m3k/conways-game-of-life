@@ -12,6 +12,21 @@ class GameState {
     return false;
   }
 
+  setStep() {
+    if (!this.step) {
+      this.state = GameState.states.PAUSED;
+      this.step = true;
+    }
+  }
+
+  setPaused() {
+    this.state = GameState.states.PAUSED;
+  }
+
+  setRunning() {
+    this.state = GameState.states.RUNNING;
+  }
+
   triggerState = () =>
     (this.state =
       this.state === this.states.RUNNING
