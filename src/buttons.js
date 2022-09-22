@@ -1,21 +1,21 @@
 // Run button
 
 $("#onCheck").click(() => {
-  gameState.state = GameState.states.RUNNING;
+  gameState.setRunning();
 });
 
 // Step button
 $("#stepButton").click(() => {
-  gameState.state = GameState.states.PAUSED;
   gameState.setStep();
 });
 
 // Pause button
 $("#offCheck").click(() => {
-  gameState.state = GameState.states.PAUSED;
+  gameState.setPaused();
 });
 
 // Random button
 $("#randomFill").click(() => {
-  game.random($("#fillChanceInput").val());
+  const chance = $("#fillChanceInput").val();
+  game.random();
 });
